@@ -1,0 +1,13 @@
+
+
+.main {
+  height: 100vh;
+  min-height: 100%;
+}
+
+.btn-width {
+  width: 100px;
+}
+
+.top-buffer { margin-top:20px; }
+
