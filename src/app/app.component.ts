@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {interval, Observable, Subscription} from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {interval, Subscription} from 'rxjs';
 import {TimerService} from './timer/timer.service';
 
 
