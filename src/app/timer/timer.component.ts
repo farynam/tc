@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {interval, Observable, Subscription} from 'rxjs';
+import {TimerService} from './timer.service';
 
 
 @Component({
@@ -15,23 +16,18 @@ export class TimerComponent implements OnInit {
   private timer: Subscription;
 
 
-  @Input()
-  reset: EventEmitter<void>;
-
-  @Input()
-  startPause: EventEmitter<boolean>;
-
+  constructor(private timerService: TimerService) {}
 
   ngOnInit(): void {
     this.pausedTime = 0;
     this.time = '00:00';
 
 
-    this.reset.subscribe(() => {
+    this.timerService.resetTimer.subscribe(() => {
       this.resetTime();
     });
 
-    this.startPause.subscribe(() => {
+    this.timerService.startPauseTimer.subscribe(() => {
       this.startStop();
     });
 

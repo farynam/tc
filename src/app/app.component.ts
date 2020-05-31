@@ -1,11 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {interval, Observable, Subscription} from 'rxjs';
+import {TimerService} from './timer/timer.service';
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [TimerService]
 })
 export class AppComponent implements OnInit {
   title = 'tc';
@@ -17,19 +19,13 @@ export class AppComponent implements OnInit {
   timerLabel: string;
 
 
-  resetTimer: EventEmitter<void>;
-  startPauseTimer: EventEmitter<boolean>;
-
-  started: boolean;
+  constructor(private timerService: TimerService) {}
 
 
   ngOnInit(): void {
     this.timerLabel = 'Start';
-    this.started = false;
     this.outOfTime = null;
     this.color = this.default;
-    this.resetTimer = new EventEmitter();
-    this.startPauseTimer = new EventEmitter();
   }
 
   green() {
@@ -71,9 +67,8 @@ export class AppComponent implements OnInit {
   }
 
   public resetAll() {
-    this.resetTimer.emit(null);
+    this.timerService.reset();
     this.resetColors();
-    this.started = false;
     this.timerLabel = 'Start';
   }
 
@@ -82,15 +77,11 @@ export class AppComponent implements OnInit {
   }
 
   public startStop() {
-
-    this.started = !this.started;
-
-    if (!this.started) {
+    if (!this.timerService.startStop()) {
       this.timerLabel = 'Start';
     } else {
       this.timerLabel = 'Stop';
     }
 
-    this.startPauseTimer.emit(null);
   }
 }
