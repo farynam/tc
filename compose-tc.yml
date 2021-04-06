@@ -1,0 +1,20 @@
+version: "3.3"
+
+services:
+  tc:
+    container_name: tc
+    image: httpd:2.4.46-alpine
+    restart: always
+    ports:
+      - "127.0.0.1:8083:80"
+    volumes:
+      - docker_tc_data:/usr/local/apache2/htdocs/
+    networks:
+      www:
+        ipv4_address: 2.0.0.8
+volumes:
+  docker_tc_data:
+    external: true
+networks:
+  www:
+    external: true
